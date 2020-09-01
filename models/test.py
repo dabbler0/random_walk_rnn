@@ -28,7 +28,7 @@ def test(model, inp, target):
     Test a single model on a single batch.
 
     Args:
-        model (nn.Model): model to test
+        model (nn.Module): model to test
         inp (batch_size x seq_len LongTensor): input
         target (batch_size x seq_len LongTensor): expected output
 
