@@ -77,9 +77,9 @@ We collect this data together using `scripts/measure_ghost_edges.py` to see wher
 On `dgx2`, results are written to:
   - `/raid/lingo/abau/random-walks/lstm-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}-128/ghost-edges.json`. It's only done for length-128 trained models.
 
-We can test various hypotheses for what the ghost edges are likely to be; script for this is at `scripts/test_hypotheses.py`
+We can test various hypotheses for what the ghost edges are likely to be; script for this is at `scripts/test_hypotheses.py`.
 
-## Experiments with what happens after a ghost transition (TODO cleanup)
+## Experiments with what happens after a ghost transition
 
 To see how much a ghost transition is like a real transition, we can create datasets that use a fake transition like a real one. Scripts for creating these datasets are in `datasets/create_transition_dataset.py` and `scripts/make_transition_sets.py`.
 
