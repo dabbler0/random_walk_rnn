@@ -1,3 +1,6 @@
+import sys
+sys.path.append('..')
+
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -12,6 +15,8 @@ from tqdm import tqdm
 from helpers import *
 from .model import *
 from .logistic_regression import *
+from . import logistic_regression
+sys.modules['logistic_regression'] = logistic_regression
 
 import random_walks
 
@@ -121,20 +126,22 @@ def run_extraction_test(description_file, generator_file, dataset_file):
 
     sentences = file.split('\n')
 
-    comparison = random_walks.create_random_walk_graph(
-        generator.states,
-        generator.alphabet_size,
-        np.random,
-        drop_prob = 0
-    )
-
     model_location = os.path.split(description_file)[0]
 
-    with open(os.path.join(model_location, 'comparison-graph.json'), 'w') as f:
-        json.dump(comparison.serialize(), f)
+    if os.path.exists(os.path.join(model_location, 'comparison-graph.json')):
+        with open(os.path.join(model_location, 'comparison-graph.json')) as f:
+            comparison = random_walks.load_from_serialized(json.load(f))
+    else:
+        comparison = None
 
-    # Train
-    train_extractor(description, generator, sentences,
-        os.path.join(model_location, 'extractor-model.pt'))
-    train_extractor(description, generator, sentences,
-        os.path.join(model_location, 'extractor-comparison.pt'))
+    # Test
+    true_accuracy = test_extractor(description, generator, sentences,
+        torch.load(os.path.join(model_location, 'extractor-model.pt')))
+
+    if comparison is not None and os.path.exists(os.path.join(model_location, 'extractor-comparison.pt')):
+        control_accuracy = test_extractor(description, comparison, sentences,
+            torch.load(os.path.join(model_location, 'extractor-comparison.pt')))
+    else:
+        control_accuracy = -1
+
+    return (true_accuracy, control_accuracy)

@@ -39,9 +39,9 @@ General-purpose code for training logistic regression models is in `models/extra
 On `dgx2`, the relevant logistic regression models are in:
   - `/raid/lingo/abau/random-walks/lstm-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}-{MAX_TRAIN_LENGTH}/extractor-model.pt` for all the above given models.
 
-One can then test the extraction with `models/test_logistic_regression_extractor.py` or `scripts/test_logistic_regression_extractor.py`. To make sure that the logistic regression is learning something legitimate, we create a fake graph where all emissions are always allowed, with the same number of states, and make sure that it's easier to learn the states of the true graph than the fake one.
+One can then test the extraction with `models/test_extractor.py` or `scripts/run_extractor_tests.py`. To make sure that the logistic regression is learning something legitimate, we create a fake graph where all emissions are always allowed, with the same number of states, and make sure that it's easier to learn the states of the true graph than the fake one.
 
-General-purpose code for the mixture of Gaussians is in `models/gaussian_extraction.py`; for a usage example see `scripts/gaussian.py`.
+General-purpose code for training the mixture of Gaussians is in `models/estimate_gaussians.py`; for usage example see `scripts/run_gaussian_estimates.py`.
 
 On `dgx2`, the relevant Gaussian parameters are in:
   - `/raid/lingo/abau/random-walks/lstm-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}-128/gaussians.json` for each dataset. We only have Gaussian parameters for the length-128 trained models.
