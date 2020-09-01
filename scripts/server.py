@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 sys.path.append('..')
 
@@ -9,7 +11,6 @@ import torch
 
 import helpers
 from models import predict
-from models.gaussians import *
 
 decoder = None
 extractor = None
@@ -60,9 +61,12 @@ class Handler(BaseHTTPRequestHandler):
             decoder = torch.load(decoder_filename)
             extractor = torch.load(extractor_filename)
 
+            ''' # TODO incorporate gaussians somehow
             if os.path.exists(gaussians_filename):
                 with open(gaussians_filename) as f:
-                    distributions = DistributionsRecord(json.load(f))
+                    distributions = DistributionsRecord(json.load(f), graph)
+            '''
+            distributions = None
 
             self.wfile.write(json.dumps({'success': True}).encode('utf-8'))
 
@@ -86,8 +90,8 @@ class Handler(BaseHTTPRequestHandler):
 
             self.wfile.write(json.dumps({
                 'predictions': [pred[0].cpu().numpy().tolist() for pred in predictions],
-                'extractions': [ext[0].cpu().numpy().tolist() for ext in extractions],
-                'gaussians': [res[0].cpu().numpy().tolist() for res in gaussians]
+                'extractions': [ext[0].cpu().numpy().tolist() for ext in extractions]
+                # TODO incorporate Gaussians somehow
             }).encode('utf-8'))
 
             return

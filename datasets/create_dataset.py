@@ -48,7 +48,7 @@ def generate_dataset(
         for _ in tqdm(range(num_sentences)):
             length = np.random.randint(min_length, max_length)
 
-            sentence = graph.generate_of_length(length, np.random)
+            sentence = graph.generate(length, np.random)
 
             f.write(''.join(
                 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[i] for i in sentence
@@ -87,7 +87,7 @@ def generate_dataset_from_model(
         for _ in tqdm(range(num_sentences)):
             length = np.random.randint(min_length, max_length)
 
-            sentence = graph.generate_of_length(length, np.random)
+            sentence = graph.generate(length, np.random)
 
             f.write(''.join(
                 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[i] for i in sentence

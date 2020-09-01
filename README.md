@@ -25,7 +25,7 @@ General-purpose code for testing models in `models/test.py`; for a usage example
 On `dgx2`, the resulting test numbers are in
   - `/raid/lingo/abau/random-walks/test-results.json`.
 
-## Extracting graph states from RNN hidden states (TODO cleanup)
+## Extracting graph states from RNN hidden states
 
 We can extract graph states from RNN hidden states in two different ways; through logistic regression or through a mixture of multivariate Gaussians.
 
@@ -46,11 +46,13 @@ General-purpose code for training the mixture of Gaussians is in `models/estimat
 On `dgx2`, the relevant Gaussian parameters are in:
   - `/raid/lingo/abau/random-walks/lstm-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}-128/gaussians.json` for each dataset. We only have Gaussian parameters for the length-128 trained models.
 
-## Visualizing individual predictions (TODO cleanup)
+*TODO* The code for evaluating Gaussians for classification after they trained is currently a mess, will come back to later.
+
+## Visualizing individual predictions
 
 Using our trained extractor models, we can show what the model thinks its hidden state is for individual predictions. To generate this data, we use the code in `models/predict.py`; usage example in `scripts/predict.py`. This generates JSON data for use by a web interface for visualization, and includes predictions alongside predicted states.
 
-For visualization purposes we use a small subsample of the test set. This is generaetd using `scripts/pick_small_sample.py`. The small samples used on `dgx2` are:
+For visualization purposes we use a small subsample of the test set. This is generated using `scripts/pick_small_sample.py`. The small samples used on `dgx2` are:
   - `/raid/lingo/abau/random-walks/testset-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}/small_sample`
 
 On `dgx2`, the generated predictions (missing Gaussians, because these were generated before I wrote that code) are in files:
@@ -58,14 +60,14 @@ On `dgx2`, the generated predictions (missing Gaussians, because these were gene
 
 There's too much data to visualize it all at once, so we can visualize individual predictions interactively instead, using `scripts/server.py` and `scripts/visualize.html`. Run `server.py` and browse `http://localhost:8080`.
 
-## Measuring ghost edges for out-of-domain emissions (TODO cleanup)
+## Measuring ghost edges for out-of-domain emissions
 
 This last experiment, in which we test the models on out-of-domain data, has several steps. First, we need to create a model where we give every possible out-of-domain character in a small number of contexts. To do this, we take the small sample from before and add characters to the end of each sentence. Code for this is in `scripts/make_extended_sets.py`.
 
 On `dgx2`, the extended datasets are in:
   - `/raid/lingo/abau/random-walks/testset-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}/small_sample_extended`
 
-We then run extractions and predictions using `models/predict.py` on this extended dataset to see what states the model thinks it goes to.
+We then run extractions and predictions using `models/predict.py` on this extended dataset to see what states the model thinks it goes to. The script for this is in `scripts/run_extended_predictions.py`.
 
 On `dgx2`, these predictions are written to:
   - `/raid/lingo/abau/random-walks/lstm-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}-128/extended-annotated.json`. It's only done for length-128 trained models.
@@ -77,7 +79,7 @@ On `dgx2`, results are written to:
 
 We can test various hypotheses for what the ghost edges are likely to be; script for this is at `scripts/test_hypotheses.py`
 
-## Experiments with what happens after a ghost transition
+## Experiments with what happens after a ghost transition (TODO cleanup)
 
 To see how much a ghost transition is like a real transition, we can create datasets that use a fake transition like a real one. Scripts for creating these datasets are in `datasets/create_transition_dataset.py` and `scripts/make_transition_sets.py`.
 
