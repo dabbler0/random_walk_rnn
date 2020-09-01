@@ -146,6 +146,5 @@ for labels, sample in tqdm(total_example_pool):
     correct += (labels == results).sum()
     incorrect += (labels != results).sum()
 
-    print('Average inside mahalanobis so far', inside_mahalanobis / (correct + incorrect))
-
+print('Average inside mahalanobis', inside_mahalanobis / (correct + incorrect))
 print('%d CORRECT, %d INCORRECT -- %f ACCURACY' % (correct, incorrect, float(correct) / float(correct + incorrect)))
