@@ -186,6 +186,6 @@ def run_extraction(description_file, generator_file, dataset_file):
 
     # Train
     train_extractor(description, generator, sentences,
-        os.path.join(model_location, 'extractor-model-test.pt'))
+        os.path.join(model_location, 'extractor-model.pt'))
     train_extractor(description, generator, sentences,
-        os.path.join(model_location, 'extractor-comparison-test.pt'))
+        os.path.join(model_location, 'extractor-comparison.pt'))

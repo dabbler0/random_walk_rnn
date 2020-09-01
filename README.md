@@ -34,7 +34,7 @@ To do this, we first need to dump the RNN hidden states at test time. General-pu
 On `dgx2`, the relevant dumps are in:
   - `/raid/lingo/abau/random-walks/lstm-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}-{MAX_TRAIN_LENGTH}/description.pt` for all above given models.
 
-General-purpose code for training logistic regression models is in `models/logistic_regression_extraction.py`; for a usage example see `scripts/extract.py`.
+General-purpose code for training logistic regression models is in `models/extract.py`; for a usage example see `scripts/run_extractions.py`.
 
 On `dgx2`, the relevant logistic regression models are in:
   - `/raid/lingo/abau/random-walks/lstm-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}-{MAX_TRAIN_LENGTH}/extractor-model.pt` for all the above given models.
