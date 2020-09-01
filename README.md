@@ -46,7 +46,7 @@ General-purpose code for training the mixture of Gaussians is in `models/estimat
 On `dgx2`, the relevant Gaussian parameters are in:
   - `/raid/lingo/abau/random-walks/lstm-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}-128/gaussians.json` for each dataset. We only have Gaussian parameters for the length-128 trained models.
 
-*TODO* The code for evaluating Gaussians for classification after they trained is currently a mess, will come back to later.
+The code for evaluating Gaussians for classification after they trained is a little bit messy but can still be used. Run `scripts/evaluate_gaussians.py` to get classification accuracy for the Gaussian models.
 
 ## Visualizing individual predictions
 
@@ -78,6 +78,8 @@ On `dgx2`, results are written to:
   - `/raid/lingo/abau/random-walks/lstm-{STATES}-{ALPHABET_SIZE}-{RANDOM_SEED}-128/ghost-edges.json`. It's only done for length-128 trained models.
 
 We can test various hypotheses for what the ghost edges are likely to be; script for this is at `scripts/test_hypotheses.py`.
+
+We can also test how close we land to any Gaussian cluster for real states after a "ghost edge" jump. Using the code in `models/predict_gaussians.py` will generate a JSON file with all of the log-probabilities and Mahalanobis distances for each state at each position in a given dump file. See `scripts/run_gaussian_predictions.py` for the script to run it. Then the script `scripts/test_mahalanobis.py` relies on the same JSON file and will test how far each "ghost edge jump" lands from the closest Gaussian cluster.
 
 ## Experiments with what happens after a ghost transition
 
