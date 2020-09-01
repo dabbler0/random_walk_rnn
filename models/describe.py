@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# https://github.com/spro/char-rnn.pytorch
-
 import sys
 sys.path.append('..')
 
